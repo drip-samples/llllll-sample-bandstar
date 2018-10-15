@@ -11,6 +11,19 @@ class TokenModel {
   }
 
   static decode(id, owner, creator, inscription) {
+    // validate
+    if ((id === null)
+      || (id.length === 0)
+      || (owner === null)
+      || (owner.length === 0)
+      || (creator === null)
+      || (creator.length === 0)
+      || (inscription === null)
+      || (inscription.length === 0))
+    {
+      return null
+    }
+
     const model = new TokenModel()
     model.id = `0x${id}`
     model.owner = owner
