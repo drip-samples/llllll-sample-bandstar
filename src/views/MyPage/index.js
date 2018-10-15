@@ -36,18 +36,17 @@ class MyPage extends React.Component {
         return sixPillars.methods.inscription(id).call({from: currentAddress})
       })
       .then((result) => {
-        const model = TokenModel(id, currentAddress, creator, result)
+        const bn = new this.props.web3.utils.BN(result)
+        const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
+        const model = TokenModel.decode(id, currentAddress, creator, inscription)
         this.setState({tokenModels: this.state.tokenModels.concat(model)})
         this.updateTokenId(index)
       })
   }
 
   handleMintClick = () => {
-    // TODO: inscription logic.
-    let inscription = "0x"
-    for (let i = 0; i < 8; i++) {
-      inscription += ("00000000" + Math.floor(Math.random() * 0xffffffff).toString(16)).slice(-8)
-    }
+    const tokenModel = TokenModel.mint()
+    const inscription = tokenModel.encode()
     this.props.mintToken && this.props.mintToken(inscription)
   }
 
