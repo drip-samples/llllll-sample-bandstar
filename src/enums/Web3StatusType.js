@@ -1,10 +1,10 @@
 export default {
-  identity: 'identity',
-  checking: 'checking',
-  waiting: 'waiting',
+  identity: Symbol('identity'),
+  checking: Symbol('checking'),
+  waiting: Symbol('waiting'),
   failed: {
-    notfound: 'failed.notfound',
-    network: 'failed.network',
+    notfound: Symbol('failed.notfound'),
+    network: Symbol('failed.network'),
   },
-  success: 'success',
+  success: Symbol('success'),
 }

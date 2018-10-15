@@ -1,6 +1,6 @@
 export default {
-  none: 'none',
-  pending: 'pending',
-  success: 'success',
-  cancel: 'cancel',
+  none: Symbol('none'),
+  pending: Symbol('pending'),
+  success: Symbol('success'),
+  cancel: Symbol('cancel'),
 }
