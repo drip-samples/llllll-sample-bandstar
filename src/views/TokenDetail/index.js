@@ -1,9 +1,16 @@
 import React from 'react'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import ValidateWeb3Injector from '../../injectors/ValidateWeb3Injector'
 import TokenModel from '../../models/TokenModel'
 import TokenIcon from '../../components/TokenIcon'
+import TokenTypeChip from '../../components/TokenTypeChip'
+import GenreTypeChip from '../../components/GenreTypeChip'
 import Loading from '../../components/Loading'
 import config from '../../config'
+
+const NumericGauge = (labelName, value) => (
+  <p><LinearProgress variant='buffer' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '150px'}}/> { labelName } : { value }</p>
+)
 
 class TokenDetail extends React.Component {
   state = {
@@ -49,15 +56,19 @@ class TokenDetail extends React.Component {
     return (
       <div>
         <h1>Token Detail</h1>
-        <h3>{this.props.match.params.tokenId}</h3>
+        <div>{this.props.match.params.tokenId}</div>
         {
           (isNotFound === true) ? (
             <div>token not found</div>
 
           ) : (tokenModel !== null) ? (
             <div>
-              <TokenIcon tokenModel={tokenModel} style={{height: '200px'}} />
-              <p>{tokenModel.tokenType.toString()}</p>
+              <p><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></p>
+              <p><TokenTypeChip tokenType={tokenModel.tokenType} /><GenreTypeChip genreType={tokenModel.genreType} /></p>
+              { NumericGauge('Skill', tokenModel.skill) }
+              { NumericGauge('Passion', tokenModel.passion) }
+              { NumericGauge('Looks', tokenModel.looks) }
+              { NumericGauge('Mental', tokenModel.mental) }
             </div>
 
           ) : (
