@@ -5,14 +5,18 @@ import CardContent from '@material-ui/core/CardContent'
 import TokenIcon from '../TokenIcon'
 
 class TokenCard extends React.Component {
+  handleClick = () => {
+    const {tokenModel, onClick} = this.props
+    onClick(tokenModel)
+  }
+
   render() {
     const {tokenModel} = this.props
     return (
-      <Card>
+      <Card onClick={this.handleClick}>
         <CardActionArea>
           <CardContent>
             <TokenIcon tokenModel={tokenModel} style={{height: '100px'}} />
-            <br />
             { tokenModel.tokenType.toString() }
           </CardContent>
         </CardActionArea>

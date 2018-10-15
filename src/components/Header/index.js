@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -57,12 +58,16 @@ class Header extends React.Component {
     })
   }
 
+  handleLogoClick = () => {
+    this.props.history.push('/')
+  }
+
   render() {
     const { isProgress, isOpen, snackMessage } = this.state
     return (
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h4" color="inherit" style={{flexGrow: 1}}>
+          <Typography variant="h4" color="inherit" style={{flexGrow: 1}} onClick={this.handleLogoClick}>
             BandStar
           </Typography>
           {
@@ -84,4 +89,4 @@ class Header extends React.Component {
   }
 }
 
-export default Web3Injector(Header)
+export default withRouter(Web3Injector(Header))
