@@ -17,7 +17,7 @@ class Web3Provider extends React.Component {
   mintData = (inscription) => {
     const { web3 } = this.state
     const methodHead = web3.utils.sha3("mint(uint256,address)").substr(0, 10)
-    const _inscription = ('0000000000000000000000000000000000000000000000000000000000000000' + parseInt(inscription).toString(16)).slice(-64)
+    const _inscription = inscription.slice(-64)
     const _sixPillarsAddress = ('0000000000000000000000000000000000000000000000000000000000000000' + config.ethereum.SixPillars.address.substr(2, 40)).slice(-64)
     const data = methodHead + _inscription + _sixPillarsAddress
     return data
