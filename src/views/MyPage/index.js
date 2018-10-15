@@ -6,10 +6,12 @@ import Card from '@material-ui/core/Card'
 import ValidateWeb3Injector from '../../injectors/ValidateWeb3Injector'
 import TokenModel from '../../models/TokenModel'
 import TokenCard from '../../components/TokenCard'
+import Loading from '../../components/Loading'
 import config from '../../config'
 
 class MyPage extends React.Component {
   state = {
+    tokenBalance: null,
     tokenModels: [],
   }
 
@@ -57,11 +59,14 @@ class MyPage extends React.Component {
     const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address)
     sixPillars.methods.balanceOf(currentAddress).call({from: currentAddress})
       .then((result) => {
-        this.updateTokenId(result)
+        const balance = parseInt(result)
+        this.setState({tokenBalance: balance})
+        this.updateTokenId(balance)
       })
   }
 
   render() {
+    const { tokenBalance, tokenModels } = this.state
     return (
       <div>
         <h1>My Page</h1>
@@ -71,16 +76,31 @@ class MyPage extends React.Component {
           </Button>
         </p>
         {
-          (0 < this.state.tokenModels.length) ? (
+          (tokenBalance == null) ? (
+            <Loading />
+
+          ) : (0 < tokenBalance) ? (
             <Grid container>
               {
-                this.state.tokenModels.map((tokenModel) => (
-                    <Grid item xs={12} sm={6} md={3}>
-                      <TokenCard tokenModel={tokenModel} onClick={this.handleTokenClick} />
-                    </Grid>
-                ))
+                Array(tokenBalance).fill(0).map((value, i) => {
+                  if (i < tokenModels.length) {
+                    return (
+                      <Grid item xs={12} md={6} lg={4}>
+                        <TokenCard tokenModel={tokenModels[i]} onClick={this.handleTokenClick} />
+                      </Grid>
+                    )
+
+                  } else {
+                    return (
+                      <Grid item xs={12} md={6} lg={4}>
+                        <TokenCard />
+                      </Grid>
+                    )
+                  }
+                })
               }
             </Grid>
+
           ) : (
             <p>{"you don't have token."}</p>
           )
