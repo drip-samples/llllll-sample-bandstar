@@ -26,14 +26,14 @@ class TokenCard extends React.Component {
           {
             (tokenModel == null) ? (
               <CardContent>
-                <div style={{float: 'left', width: '100px', height: '100px', marginBottom: '16px'}}>
+                <div style={{float: 'left', height: '106px', marginBottom: '16px'}}>
                   <Loading />
                 </div>
               </CardContent>
 
             ) : (
               <CardContent>
-                <div style={{float: 'left', width: '100px', height: '100px', marginBottom: '16px', marginRight: '8px'}}>
+                <div style={{float: 'left', width: '106px', height: '106px', marginBottom: '16px', marginRight: '8px'}}>
                   <TokenIcon tokenModel={tokenModel} style={{width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%'}} />
                 </div>
                 <div>
