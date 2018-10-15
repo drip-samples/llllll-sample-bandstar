@@ -8,14 +8,8 @@ import TokenCard from '../../components/TokenCard'
 import config from '../../config'
 
 class MyPage extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const { SixPillars } = config.ethereum
-    this.state = {
-      sixPillars: new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address),
-      tokenModels: [],
-    }
+  state = {
+    tokenModels: [],
   }
 
   updateTokenId = (remainCount) => {
@@ -23,17 +17,19 @@ class MyPage extends React.Component {
       return null
     }
     const { currentAddress } = this.props
-    const { sixPillars } = this.state
+    const { SixPillars } = config.ethereum
+    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address)
     const index = remainCount - 1
     let id, creator
     sixPillars.methods.tokenOfOwnerByIndex(currentAddress, index).call({from: currentAddress})
       .then((result) => {
-        id = result
-        return sixPillars.methods.creator(id).call({from: currentAddress})
+        const bn = new this.props.web3.utils.BN(result)
+        id = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
+        return sixPillars.methods.creator(`0x${id}`).call({from: currentAddress})
       })
       .then((result) => {
         creator = result
-        return sixPillars.methods.inscription(id).call({from: currentAddress})
+        return sixPillars.methods.inscription(`0x${id}`).call({from: currentAddress})
       })
       .then((result) => {
         const bn = new this.props.web3.utils.BN(result)
