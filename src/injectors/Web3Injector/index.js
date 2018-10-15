@@ -6,9 +6,15 @@ const Web3Injector = (WrappedComponent) => (
     render() {
       return (
         <Web3Context.Consumer>
-          { ({web3, web3Status, currentAddress}) => (
-            <WrappedComponent {...this.props} web3={web3} web3Status={web3Status} currentAddress={currentAddress} />
-          )}
+          {
+            (providerProps) => {
+              const props = {
+                ...this.props,
+                ...providerProps,
+              }
+              return <WrappedComponent {...props} />
+            }
+          }
         </Web3Context.Consumer>
       )
     }

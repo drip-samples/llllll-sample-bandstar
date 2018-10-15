@@ -1,7 +1,7 @@
 const SixPillars = artifacts.require("SixPillars")
-const Insect = artifacts.require("Insect")
+const BandStar = artifacts.require("BandStar")
 
-contract('Insect', function(accounts) {
+contract('BandStar', function(accounts) {
   let obj
   let sixPillars
   const owner = accounts[1]
@@ -9,7 +9,7 @@ contract('Insect', function(accounts) {
 
   describe('mint', function() {
     beforeEach(async function () {
-      obj = await Insect.new()
+      obj = await BandStar.new()
       sixPillars = await SixPillars.new()
     })
 
