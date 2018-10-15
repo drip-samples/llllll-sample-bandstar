@@ -2,12 +2,44 @@ import React from 'react'
 import Web3 from 'web3'
 import Web3Context from '../../contexts/Web3Context'
 import Web3StatusType from '../../enums/Web3StatusType'
+import Web3TransactionType from '../../enums/Web3TransactionType'
+import config from '../../config'
 
 class Web3Provider extends React.Component {
   state = {
     web3: null,
     web3Status: Web3StatusType.identity,
     currentAddress: null,
+    web3Transaction: Web3TransactionType.none,
+    mintToken: null,
+  }
+
+  mintData = (inscription) => {
+    const { web3 } = this.state
+    const methodHead = web3.utils.sha3("mint(uint256,address)").substr(0, 10)
+    const _inscription = ('0000000000000000000000000000000000000000000000000000000000000000' + parseInt(inscription).toString(16)).slice(-64)
+    const _sixPillarsAddress = ('0000000000000000000000000000000000000000000000000000000000000000' + config.ethereum.SixPillars.address.substr(2, 40)).slice(-64)
+    const data = methodHead + _inscription + _sixPillarsAddress
+    return data
+  }
+
+  mintToken = (inscription) => {
+    this.setState({web3Transaction: Web3TransactionType.none})
+    const {web3, currentAddress} = this.state
+    web3.eth.sendTransaction({
+      from: currentAddress,
+      to: config.ethereum.BandStar.address,
+      data: this.mintData(inscription),
+    })
+      .on('transactionHash', (transactionHash) => {
+        this.setState({web3Transaction: Web3TransactionType.pending})
+      })
+      .on('receipt', (receipt) => {
+        this.setState({web3Transaction: Web3TransactionType.success})
+      })
+      .on('error', (err) => {
+        this.setState({web3Transaction: Web3TransactionType.cancel})
+      })
   }
 
   componentDidMount() {
@@ -34,6 +66,7 @@ class Web3Provider extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { web3, web3Status } = this.state
+    const mintToken = this.mintToken
     switch (web3Status) {
       case Web3StatusType.checking:
         this.setState({
@@ -56,11 +89,17 @@ class Web3Provider extends React.Component {
             }
           })
           .then((res) => {
-            // TODO: check network ID
-            console.log(res)
-            this.setState({
-              web3Status: Web3StatusType.success,
-            })
+            if (config.ethereum.networkId == res) {
+              this.setState({
+                web3Status: Web3StatusType.success,
+                mintToken,
+              })
+
+            } else {
+              this.setState({
+                web3Status: Web3StatusType.failed.network,
+              })
+            }
           })
           .catch((err) => {
             console.log(err)
