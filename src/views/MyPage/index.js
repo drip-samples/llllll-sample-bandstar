@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -46,9 +47,15 @@ class MyPage extends React.Component {
     this.props.mintToken && this.props.mintToken(inscription)
   }
 
+  handleTokenClick = (tokenModel) => {
+    this.props.history.push(`/tokens/${tokenModel.id}`)
+  }
+
   componentDidMount() {
     const { currentAddress } = this.props
-    this.state.sixPillars.methods.balanceOf(currentAddress).call({from: currentAddress})
+    const { SixPillars } = config.ethereum
+    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address)
+    sixPillars.methods.balanceOf(currentAddress).call({from: currentAddress})
       .then((result) => {
         this.updateTokenId(result)
       })
@@ -69,7 +76,7 @@ class MyPage extends React.Component {
               {
                 this.state.tokenModels.map((tokenModel) => (
                     <Grid item xs={12} sm={6} md={3}>
-                      <TokenCard tokenModel={tokenModel} />
+                      <TokenCard tokenModel={tokenModel} onClick={this.handleTokenClick} />
                     </Grid>
                 ))
               }
@@ -83,4 +90,4 @@ class MyPage extends React.Component {
   }
 }
 
-export default ValidateWeb3Injector(MyPage)
+export default withRouter(ValidateWeb3Injector(MyPage))
