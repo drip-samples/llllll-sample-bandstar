@@ -116,7 +116,7 @@ class TokenDetail extends React.Component {
                 (tokenModel.tokenType === TokenType.band) && (
                   <React.Fragment>
                     <div>
-                      { tokenModel.childTokenTypes.map((tokenType) => <TokenTypeChip tokenType={tokenType} />) }
+                      { tokenModel.childTokenTypes.map((tokenType, index) => <TokenTypeChip tokenType={tokenType} key={`childtoken${index}`}/>) }
                     </div>
                     <div style={{fontSize: '20px', fontWeight: 'bold'}}>
                       <div>Sales : {this.salesFormatter.format(tokenModel.sales)}</div>
