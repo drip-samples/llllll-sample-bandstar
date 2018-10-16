@@ -64,6 +64,23 @@ class TokenDetail extends React.Component {
     }
   }
 
+  networkName = (networkId) => {
+    switch (networkId) {
+      case 4:
+        return 'rinkeby'
+      case 42:
+        return 'kovan'
+      default:
+        return null
+    }
+  }
+
+  handleShareClick = () => {
+    const url = `${window.location.origin}/llllll-sample-bandstar/${this.networkName(this.props.networkId)}/tokens/${this.props.match.params.tokenId}`
+    console.log(url)
+    window.alert('copy url!')
+  }
+
   componentDidMount() {
     const { networkId, currentAddress } = this.props
     const { tokenId } = this.props.match.params
@@ -100,6 +117,7 @@ class TokenDetail extends React.Component {
 
   render() {
     const { tokenModel, isNotFound } = this.state
+    const shareUrl = `${window.location.origin}/llllll-sample-bandstar/${this.networkName(this.props.networkId)}/tokens/${this.props.match.params.tokenId}`
     return (
       <div>
         <h1>Token Detail</h1>
@@ -133,6 +151,11 @@ class TokenDetail extends React.Component {
               { NumericGauge('Passion', tokenModel.passion) }
               { NumericGauge('Looks', tokenModel.looks) }
               { NumericGauge('Mental', tokenModel.mental) }
+              <div style={{marginTop: '30px'}}>
+                Share URL
+                <br />
+                <a href={shareUrl} alt='share token url'>{shareUrl}</a>
+              </div>
             </React.Fragment>
 
           ) : (
