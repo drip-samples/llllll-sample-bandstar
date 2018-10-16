@@ -92,8 +92,15 @@ class MyPage extends React.Component {
   }
 
   handleSubmitMixedClick = () => {
-    console.log('submit')
-    console.log(this.state.selectedTokenIds)
+    const { tokenModels, selectedTokenIds } = this.state
+    const mixedTokenModels = tokenModels.filter((model) => 0 <= selectedTokenIds.indexOf(model.id))
+    const bandToken = TokenModel.mixedMint(mixedTokenModels)
+    console.log(bandToken)
+    const inscription = bandToken.encode()
+    console.log(inscription)
+    this.props.mintToken && this.props.mintToken(inscription, () => {
+      mixedTokenModels.forEach((tokenModel) => { tokenModel.alreadyMixed() })
+    })
   }
 
   componentDidMount() {
