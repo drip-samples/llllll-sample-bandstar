@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <Web3Provider>
-        <BrowserRouter>
+        <BrowserRouter basename={'/llllll-sample-bandstar'}>
           <React.Fragment>
             <Header />
             <Switch>
