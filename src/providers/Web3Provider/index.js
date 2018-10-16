@@ -23,7 +23,7 @@ class Web3Provider extends React.Component {
     return data
   }
 
-  mintToken = (inscription) => {
+  mintToken = (inscription, sendingCallback = null) => {
     this.setState({web3Transaction: Web3TransactionType.none})
     const {web3, currentAddress} = this.state
     web3.eth.sendTransaction({
@@ -33,6 +33,7 @@ class Web3Provider extends React.Component {
     })
       .on('transactionHash', (transactionHash) => {
         this.setState({web3Transaction: Web3TransactionType.pending})
+        sendingCallback && sendingCallback()
       })
       .on('receipt', (receipt) => {
         this.setState({web3Transaction: Web3TransactionType.success})
