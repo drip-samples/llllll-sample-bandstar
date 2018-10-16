@@ -1,4 +1,3 @@
-import config from '../../config'
 import TokenType from '../../enums/TokenType'
 import GenreType from '../../enums/GenreType'
 
@@ -149,7 +148,7 @@ class TokenModel {
     }
   }
 
-  static decode(id, owner, creator, inscription) {
+  static decode(id, owner, creator, inscription, contractAddress) {
     // validate
     if ((id === null)
       || (id.length === 0)
@@ -169,7 +168,7 @@ class TokenModel {
     model.creator = creator
     model.inscription = `0x${inscription.slice(-64)}`
 
-    if (creator.toLowerCase() === config.ethereum.BandStar.address) {
+    if (creator.toLowerCase() === contractAddress.toLowerCase()) {
       this.decodeTokenTypeByBandStar(model, inscription)
 
     } else {

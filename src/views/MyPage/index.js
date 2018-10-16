@@ -9,7 +9,7 @@ import ValidateWeb3Injector from '../../injectors/ValidateWeb3Injector'
 import TokenModel from '../../models/TokenModel'
 import TokenCard from '../../components/TokenCard'
 import Loading from '../../components/Loading'
-import config from '../../config'
+import ContractData from '../../enums/ContractData'
 
 const LIST_ITEM_ONCE = 8
 
@@ -27,9 +27,9 @@ class MyPage extends React.Component {
     if ((nextIndex < 0) || (remainCount <= 0)) {
       return null
     }
-    const { currentAddress } = this.props
-    const { SixPillars } = config.ethereum
-    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address)
+    const { networkId, currentAddress } = this.props
+    const { SixPillars } = ContractData
+    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.addresses[networkId])
     let id, creator
     sixPillars.methods.tokenOfOwnerByIndex(currentAddress, nextIndex).call({from: currentAddress})
       .then((result) => {
@@ -44,7 +44,7 @@ class MyPage extends React.Component {
       .then((result) => {
         const bn = new this.props.web3.utils.BN(result)
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
-        const model = TokenModel.decode(id, currentAddress, creator, inscription)
+        const model = TokenModel.decode(id, currentAddress, creator, inscription, ContractData.BandStar.addresses[networkId])
         this.setState({tokenModels: this.state.tokenModels.concat(model)})
         this.updateTokenId(nextIndex - 1, remainCount - 1)
       })
@@ -95,18 +95,16 @@ class MyPage extends React.Component {
     const { tokenModels, selectedTokenIds } = this.state
     const mixedTokenModels = tokenModels.filter((model) => 0 <= selectedTokenIds.indexOf(model.id))
     const bandToken = TokenModel.mixedMint(mixedTokenModels)
-    console.log(bandToken)
     const inscription = bandToken.encode()
-    console.log(inscription)
     this.props.mintToken && this.props.mintToken(inscription, () => {
       mixedTokenModels.forEach((tokenModel) => { tokenModel.alreadyMixed() })
     })
   }
 
   componentDidMount() {
-    const { currentAddress } = this.props
-    const { SixPillars } = config.ethereum
-    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address)
+    const { networkId, currentAddress } = this.props
+    const { SixPillars } = ContractData
+    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.addresses[networkId])
     sixPillars.methods.balanceOf(currentAddress).call({from: currentAddress})
       .then((result) => {
         const balance = parseInt(result)
