@@ -75,12 +75,6 @@ class TokenDetail extends React.Component {
     }
   }
 
-  handleShareClick = () => {
-    const url = `${window.location.origin}/llllll-sample-bandstar/${this.networkName(this.props.networkId)}/tokens/${this.props.match.params.tokenId}`
-    console.log(url)
-    window.alert('copy url!')
-  }
-
   componentDidMount() {
     const { networkId, currentAddress } = this.props
     const { tokenId } = this.props.match.params
