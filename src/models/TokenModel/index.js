@@ -2,6 +2,9 @@ import config from '../../config'
 import TokenType from '../../enums/TokenType'
 import GenreType from '../../enums/GenreType'
 
+const IS_ALREADY_DISPLAY_KEY = 'IS_ALREADY_DISPLAY_KEY_'
+const IS_ALREADY_DISPLAY_VALUE = 'true'
+
 class TokenModel {
   constructor() {
     this.id = null
@@ -14,6 +17,7 @@ class TokenModel {
     this.passion = 0
     this.looks = 0
     this.mental = 0
+    this.isAlreadyDisplay = false
   }
 
   static decodeTokenTypeByBandStar(model, inscription) {
@@ -106,10 +110,10 @@ class TokenModel {
     }
 
     const model = new TokenModel()
-    model.id = `0x${id}`
+    model.id = `0x${id.slice(-64)}`
     model.owner = owner
     model.creator = creator
-    model.inscription = `0x${inscription}`
+    model.inscription = `0x${inscription.slice(-64)}`
 
     if (creator.toLowerCase() === config.ethereum.BandStar.address) {
       this.decodeTokenTypeByBandStar(model, inscription)
@@ -124,6 +128,8 @@ class TokenModel {
     } else {
       this.decodeForMember(model, inscription)
     }
+
+    model.isAlreadyDisplay = (window.localStorage.getItem(IS_ALREADY_DISPLAY_KEY + model.id.toLowerCase()) === IS_ALREADY_DISPLAY_VALUE)
 
     return model
   }
@@ -163,6 +169,11 @@ class TokenModel {
       }
     }
     return `0x${inscription}`
+  }
+
+  alreadyDisplay() {
+    this.isAlreadyDisplay = true
+    window.localStorage.setItem(IS_ALREADY_DISPLAY_KEY + this.id.toLowerCase(), IS_ALREADY_DISPLAY_VALUE)
   }
 }
 

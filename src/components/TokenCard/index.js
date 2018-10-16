@@ -6,6 +6,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import TokenIcon from '../TokenIcon'
 import TokenTypeChip from '../TokenTypeChip'
 import GenreTypeChip from '../GenreTypeChip'
+import NewChip from '../NewChip'
 import Loading from '../Loading'
 
 const NumericGauge = (labelName, value) => (
@@ -38,7 +39,15 @@ class TokenCard extends React.Component {
                 </div>
                 <div>
                   <ul style={{listStyle: 'none'}}>
-                    <li><TokenTypeChip tokenType={tokenModel.tokenType} /><GenreTypeChip genreType={tokenModel.genreType} /></li>
+                    <li>
+                      {
+                        !tokenModel.isAlreadyDisplay && (
+                          <NewChip />
+                        )
+                      }
+                      <TokenTypeChip tokenType={tokenModel.tokenType} />
+                      <GenreTypeChip genreType={tokenModel.genreType} />
+                    </li>
                     { NumericGauge('Skill', tokenModel.skill) }
                     { NumericGauge('Passion', tokenModel.passion) }
                     { NumericGauge('Looks', tokenModel.looks) }
