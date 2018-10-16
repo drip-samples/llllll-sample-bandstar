@@ -89,7 +89,7 @@ class Web3Provider extends React.Component {
             }
           })
           .then((res) => {
-            if (config.ethereum.networkId == res) {
+            if (config.ethereum.networkId === res) {
               this.setState({
                 web3Status: Web3StatusType.success,
                 mintToken,

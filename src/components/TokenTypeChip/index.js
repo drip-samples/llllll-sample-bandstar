@@ -37,6 +37,8 @@ class TokenTypeChip extends React.Component {
       case TokenType.band:
         label = 'Band'
         break
+      default:
+        return null
     }
     return <Chip label={label} color='primary' {...remainProps} />
   }

@@ -9,7 +9,9 @@ import Loading from '../../components/Loading'
 import config from '../../config'
 
 const NumericGauge = (labelName, value) => (
-  <p><LinearProgress variant='buffer' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '150px'}}/> { labelName } : { value }</p>
+  <div>
+    <LinearProgress variant='determinate' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '150px'}}/> { labelName } : { value }
+  </div>
 )
 
 class TokenDetail extends React.Component {
@@ -64,8 +66,8 @@ class TokenDetail extends React.Component {
 
           ) : (tokenModel !== null) ? (
             <div>
-              <p><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></p>
-              <p><TokenTypeChip tokenType={tokenModel.tokenType} /><GenreTypeChip genreType={tokenModel.genreType} /></p>
+              <div><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></div>
+              <div><TokenTypeChip tokenType={tokenModel.tokenType} /><GenreTypeChip genreType={tokenModel.genreType} /></div>
               { NumericGauge('Skill', tokenModel.skill) }
               { NumericGauge('Passion', tokenModel.passion) }
               { NumericGauge('Looks', tokenModel.looks) }

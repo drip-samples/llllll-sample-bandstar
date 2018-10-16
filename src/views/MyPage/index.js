@@ -100,17 +100,17 @@ class MyPage extends React.Component {
           ) : (0 < displayCount) ? (
             <Grid container>
               {
-                Array(displayCount).fill(0).map((value, i) => {
+                Array(displayCount).fill(0).map((_, i) => {
                   if (i < tokenModels.length) {
                     return (
-                      <Grid item xs={12} md={6} lg={4}>
+                      <Grid item xs={12} md={6} lg={4} key={i}>
                         <TokenCard tokenModel={tokenModels[i]} onClick={this.handleTokenClick} />
                       </Grid>
                     )
 
                   } else {
                     return (
-                      <Grid item xs={12} md={6} lg={4}>
+                      <Grid item xs={12} md={6} lg={4} key={i}>
                         <TokenCard />
                       </Grid>
                     )
@@ -119,7 +119,7 @@ class MyPage extends React.Component {
               }
               {
                 (0 < remainCount) && (
-                  <Grid item xs={12} md={6} lg={4}>
+                  <Grid item xs={12} md={6} lg={4} key={displayCount}>
                     <Card onClick={this.handleMoreClick}>
                       <CardActionArea style={{width: '100%'}}>
                         <CardContent>

@@ -12,7 +12,6 @@ const ValidateWeb3Injector = (WrappedComponent) => (
         <Web3Context.Consumer>
           {
             (providerProps) => {
-              const { web3Status } = providerProps
               switch (providerProps.web3Status) {
                 case Web3StatusType.failed.notfound:
                   return <MetamaskNotFound />

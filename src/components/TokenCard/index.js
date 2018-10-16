@@ -10,7 +10,7 @@ import NewChip from '../NewChip'
 import Loading from '../Loading'
 
 const NumericGauge = (labelName, value) => (
-  <li><LinearProgress variant='buffer' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '80px'}}/> { labelName } : { value }</li>
+  <li><LinearProgress variant='determinate' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '80px'}}/> { labelName } : { value }</li>
 )
 
 class TokenCard extends React.Component {
