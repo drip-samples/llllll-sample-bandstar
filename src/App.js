@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.css'
 import Web3Provider from './providers/Web3Provider'
+import GithubPagesRedirectProvider from './providers/GithubPagesRedirectProvider'
 import ShareTokenDetail from './views/ShareTokenDetail'
 import TokenDetail from './views/TokenDetail'
 import MyPage from './views/MyPage'
@@ -13,15 +14,17 @@ class App extends Component {
     return (
       <Web3Provider>
         <BrowserRouter basename={'/llllll-sample-bandstar'}>
-          <React.Fragment>
-            <Header />
-            <Switch>
-              <Route exact path="/:networkName/tokens/:tokenId" component={ShareTokenDetail} />
-              <Route exact path="/tokens/:tokenId" component={TokenDetail} />
-              <Route exact path="/" component={MyPage} />
-              <Route component={NotFound} />
-            </Switch>
-          </React.Fragment>
+          <GithubPagesRedirectProvider>
+            <React.Fragment>
+              <Header />
+              <Switch>
+                <Route exact path="/:networkName/tokens/:tokenId" component={ShareTokenDetail} />
+                <Route exact path="/tokens/:tokenId" component={TokenDetail} />
+                <Route exact path="/" component={MyPage} />
+                <Route component={NotFound} />
+              </Switch>
+            </React.Fragment>
+          </GithubPagesRedirectProvider>
         </BrowserRouter>
       </Web3Provider>
     )
