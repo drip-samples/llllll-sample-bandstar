@@ -44,6 +44,7 @@ class TokenDetail extends React.Component {
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
         const model = TokenModel.decode(tokenId, owner, creator, inscription)
         if (model != null) {
+          model.alreadyDisplay()
           this.setState({tokenModel: model})
         } else {
           this.setState({isNotFound: true})
