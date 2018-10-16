@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
 import Web3Injector from '../../injectors/Web3Injector'
 import Web3TransactionType from '../../enums/Web3TransactionType'
+import NetworkName from '../../enums/NetworkName'
 
 class Header extends React.Component {
   state = {
@@ -63,6 +64,7 @@ class Header extends React.Component {
   }
 
   render() {
+    const { networkId } = this.props
     const { isProgress, isOpen, snackMessage } = this.state
     return (
       <AppBar position="static">
@@ -72,6 +74,13 @@ class Header extends React.Component {
           </Typography>
           {
             isProgress && <CircularProgress color="secondary" size={30} />
+          }
+          {
+            networkId && NetworkName[networkId] && (
+              <Typography variant="h6" color="inherit">
+                {NetworkName[networkId]}
+              </Typography>
+            )
           }
         </Toolbar>
         <Snackbar
