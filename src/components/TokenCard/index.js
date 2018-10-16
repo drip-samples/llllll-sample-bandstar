@@ -7,6 +7,7 @@ import CheckBox from '@material-ui/icons/CheckBox'
 import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank'
 import teal from '@material-ui/core/colors/teal'
 import grey from '@material-ui/core/colors/grey'
+import TokenType from '../../enums/TokenType'
 import TokenIcon from '../TokenIcon'
 import TokenTypeChip from '../TokenTypeChip'
 import GenreTypeChip from '../GenreTypeChip'
@@ -44,6 +45,13 @@ class TokenCard extends React.Component {
               <CardContent>
                 <div style={{float: 'left', height: '106px', marginBottom: '16px'}}>
                   <Loading />
+                </div>
+              </CardContent>
+
+            ) : ((tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed) ? (
+              <CardContent>
+                <div style={{float: 'left', height: '106px', marginBottom: '16px'}}>
+                  {tokenModel.id}<br />is already used.
                 </div>
               </CardContent>
 
