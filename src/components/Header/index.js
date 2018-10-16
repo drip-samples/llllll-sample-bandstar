@@ -17,14 +17,8 @@ class Header extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { web3Transaction } = this.props
-    if (web3Transaction != prevProps.web3Transaction) {
+    if (web3Transaction !== prevProps.web3Transaction) {
       switch (web3Transaction) {
-        case Web3TransactionType.none:
-          this.setState({
-            isProgress: false,
-            isOpen: false,
-          })
-          break
         case Web3TransactionType.pending:
           this.setState({
             isProgress: true,
@@ -46,6 +40,12 @@ class Header extends React.Component {
             isProgress: false,
             isOpen: true,
             snackMessage: "cancel transaction.",
+          })
+          break
+        default:
+          this.setState({
+            isProgress: false,
+            isOpen: false,
           })
           break
       }

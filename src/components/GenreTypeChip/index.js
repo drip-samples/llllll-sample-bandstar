@@ -58,6 +58,8 @@ class GenreTypeChip extends React.Component {
       case GenreType.symphonicMetal:
         label = 'SumphonicMetal'
         break
+      default:
+        return null
     }
     return <Chip label={label} color='secondary' {...remainProps} />
   }

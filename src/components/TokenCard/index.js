@@ -3,6 +3,10 @@ import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import CheckBox from '@material-ui/icons/CheckBox'
+import CheckBoxOutlineBlank from '@material-ui/icons/CheckBoxOutlineBlank'
+import teal from '@material-ui/core/colors/teal'
+import grey from '@material-ui/core/colors/grey'
 import TokenIcon from '../TokenIcon'
 import TokenTypeChip from '../TokenTypeChip'
 import GenreTypeChip from '../GenreTypeChip'
@@ -10,7 +14,7 @@ import NewChip from '../NewChip'
 import Loading from '../Loading'
 
 const NumericGauge = (labelName, value) => (
-  <li><LinearProgress variant='buffer' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '80px'}}/> { labelName } : { value }</li>
+  <li><LinearProgress variant='determinate' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '80px'}}/> { labelName } : { value }</li>
 )
 
 class TokenCard extends React.Component {
@@ -20,10 +24,21 @@ class TokenCard extends React.Component {
   }
 
   render() {
-    const {tokenModel} = this.props
+    const {tokenModel, isMixedMode, isSelected} = this.props
+    let cardStyle = {
+      width: '100%',
+    }
+    if (isMixedMode) {
+      if (isSelected) {
+        cardStyle.backgroundColor = teal['100']
+
+      } else if (tokenModel.isAlreadyMixed) {
+        cardStyle.backgroundColor = grey['500']
+      }
+    }
     return (
       <Card onClick={this.handleClick}>
-        <CardActionArea style={{width: '100%'}}>
+        <CardActionArea style={cardStyle}>
           {
             (tokenModel == null) ? (
               <CardContent>
@@ -34,10 +49,10 @@ class TokenCard extends React.Component {
 
             ) : (
               <CardContent>
-                <div style={{float: 'left', width: '106px', height: '106px', marginBottom: '16px', marginRight: '8px'}}>
+                <div style={{float: 'left', width: '106px', height: '106px', marginBottom: '16px'}}>
                   <TokenIcon tokenModel={tokenModel} style={{width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%'}} />
                 </div>
-                <div>
+                <div style={{float: 'left'}}>
                   <ul style={{listStyle: 'none'}}>
                     <li>
                       {
@@ -54,6 +69,13 @@ class TokenCard extends React.Component {
                     { NumericGauge('Mental', tokenModel.mental) }
                   </ul>
                 </div>
+                {
+                  isMixedMode && !tokenModel.isAlreadyMixed && (
+                    <div style={{float: 'right'}}>
+                      { isSelected ? <CheckBox /> : <CheckBoxOutlineBlank /> }
+                    </div>
+                  )
+                }
               </CardContent>
             )
           }

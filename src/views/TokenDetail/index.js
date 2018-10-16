@@ -1,6 +1,7 @@
 import React from 'react'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import ValidateWeb3Injector from '../../injectors/ValidateWeb3Injector'
+import TokenType from '../../enums/TokenType'
 import TokenModel from '../../models/TokenModel'
 import TokenIcon from '../../components/TokenIcon'
 import TokenTypeChip from '../../components/TokenTypeChip'
@@ -9,13 +10,58 @@ import Loading from '../../components/Loading'
 import config from '../../config'
 
 const NumericGauge = (labelName, value) => (
-  <p><LinearProgress variant='buffer' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '150px'}}/> { labelName } : { value }</p>
+  <div>
+    <LinearProgress variant='determinate' value={Math.round((value * 100) / 0xff)} style={{display: 'inline-block', verticalAlign: 'middle', width: '150px'}}/> { labelName } : { value }
+  </div>
 )
 
 class TokenDetail extends React.Component {
   state = {
     tokenModel: null,
     isNotFound: false,
+  }
+
+  salesFormatter = new Intl.NumberFormat('us-EN', {
+    style: 'currency',
+    currency: 'USD'
+  })
+
+  funFormatter = new Intl.NumberFormat('us-EN')
+
+  actFormat = (act) => {
+    if (act < 30) {
+      const day = (act === 1) ? 'day' : 'days'
+      return `${act} ${day}`
+
+    } else if (act < 360) {
+      const monthNum = Math.floor(act / 30)
+      const month = (monthNum === 1) ? 'month' : 'months'
+      const dayNum = act % 30
+      if (dayNum === 0) {
+        return `${monthNum} ${month}`
+
+      } else if (dayNum === 1) {
+        return `${monthNum} ${month}, 1 day`
+
+      } else {
+        return `${monthNum} ${month}, ${dayNum} days`
+      }
+
+    } else {
+      const i = Math.floor(act / 30)
+      const yearNum = Math.floor(i / 12)
+      const year = (yearNum === 1) ? 'year' : 'years'
+      const monthNum = i % 12
+      if (monthNum === 0) {
+        return `${yearNum} ${year}`
+
+      } else if (monthNum === 1) {
+        return `${yearNum} ${year}, 1 month`
+
+      } else {
+        return `${yearNum} ${year}, ${monthNum} months`
+      }
+    }
   }
 
   componentDidMount() {
@@ -63,14 +109,28 @@ class TokenDetail extends React.Component {
             <div>token not found</div>
 
           ) : (tokenModel !== null) ? (
-            <div>
-              <p><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></p>
-              <p><TokenTypeChip tokenType={tokenModel.tokenType} /><GenreTypeChip genreType={tokenModel.genreType} /></p>
+            <React.Fragment>
+              <div><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></div>
+              <div><TokenTypeChip tokenType={tokenModel.tokenType} /><GenreTypeChip genreType={tokenModel.genreType} /></div>
+              {
+                (tokenModel.tokenType === TokenType.band) && (
+                  <React.Fragment>
+                    <div>
+                      { tokenModel.childTokenTypes.map((tokenType) => <TokenTypeChip tokenType={tokenType} />) }
+                    </div>
+                    <div style={{fontSize: '20px', fontWeight: 'bold'}}>
+                      <div>Sales : {this.salesFormatter.format(tokenModel.sales)}</div>
+                      <div>Fun : {this.funFormatter.format(tokenModel.fun)}</div>
+                      <div>Act : {this.actFormat(tokenModel.act)}</div>
+                    </div>
+                  </React.Fragment>
+                )
+              }
               { NumericGauge('Skill', tokenModel.skill) }
               { NumericGauge('Passion', tokenModel.passion) }
               { NumericGauge('Looks', tokenModel.looks) }
               { NumericGauge('Mental', tokenModel.mental) }
-            </div>
+            </React.Fragment>
 
           ) : (
             <Loading />

@@ -19,6 +19,8 @@ class MyPage extends React.Component {
     remainCount: 0,
     displayCount: 0,
     tokenModels: [],
+    isMixedMode: false,
+    selectedTokenIds: [],
   }
 
   updateTokenId = (nextIndex, remainCount) => {
@@ -55,7 +57,22 @@ class MyPage extends React.Component {
   }
 
   handleTokenClick = (tokenModel) => {
-    this.props.history.push(`/tokens/${tokenModel.id}`)
+    const { isMixedMode, selectedTokenIds } = this.state
+    if (isMixedMode) {
+      if (0 <= selectedTokenIds.indexOf(tokenModel.id)) {
+        this.setState({
+          selectedTokenIds: selectedTokenIds.filter((tokenId) => { return tokenId !== tokenModel.id }),
+        })
+
+      } else if ((selectedTokenIds.length < 5) && !tokenModel.isAlreadyMixed) {
+        this.setState({
+          selectedTokenIds: selectedTokenIds.concat(tokenModel.id),
+        })
+      }
+
+    } else {
+      this.props.history.push(`/tokens/${tokenModel.id}`)
+    }
   }
 
   handleMoreClick = () => {
@@ -65,6 +82,25 @@ class MyPage extends React.Component {
       displayCount: (LIST_ITEM_ONCE <= remainCount) ? (displayCount + LIST_ITEM_ONCE) : (displayCount + remainCount),
     })
     this.updateTokenId(remainCount - 1, LIST_ITEM_ONCE)
+  }
+
+  handleEditMixedClick = () => {
+    this.setState({
+      isMixedMode: !this.state.isMixedMode,
+      selectedTokenIds: [],
+    })
+  }
+
+  handleSubmitMixedClick = () => {
+    const { tokenModels, selectedTokenIds } = this.state
+    const mixedTokenModels = tokenModels.filter((model) => 0 <= selectedTokenIds.indexOf(model.id))
+    const bandToken = TokenModel.mixedMint(mixedTokenModels)
+    console.log(bandToken)
+    const inscription = bandToken.encode()
+    console.log(inscription)
+    this.props.mintToken && this.props.mintToken(inscription, () => {
+      mixedTokenModels.forEach((tokenModel) => { tokenModel.alreadyMixed() })
+    })
   }
 
   componentDidMount() {
@@ -84,15 +120,31 @@ class MyPage extends React.Component {
   }
 
   render() {
-    const { tokenBalance, remainCount, displayCount, tokenModels } = this.state
+    const { tokenBalance, remainCount, displayCount, tokenModels, isMixedMode, selectedTokenIds } = this.state
     return (
       <div>
         <h1>My Page</h1>
-        <p>
-          <Button variant="outlined" onClick={this.handleMintClick}>
-            Create BandStar Token
-          </Button>
-        </p>
+        <Grid container>
+          <Grid item xs={12} md={4} lg={3} key='mint'>
+            <Button variant="outlined" onClick={this.handleMintClick}>
+              Create BandStar Token
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={4} lg={3} key='editmixed'>
+            <Button variant="outlined" color="primary" onClick={this.handleEditMixedClick}>
+              { isMixedMode ? 'Cancel Bund Edit' : 'Start Bund Edit' }
+            </Button>
+          </Grid>
+          {
+            isMixedMode && (2 <= selectedTokenIds.length) && (
+              <Grid item xs={12} md={4} lg={3} key='submitmixed'>
+                <Button variant="outlined" color="secondary" onClick={this.handleSubmitMixedClick}>
+                  Submit Band
+                </Button>
+              </Grid>
+            )
+          }
+        </Grid>
         {
           (tokenBalance == null) ? (
             <Loading />
@@ -100,17 +152,17 @@ class MyPage extends React.Component {
           ) : (0 < displayCount) ? (
             <Grid container>
               {
-                Array(displayCount).fill(0).map((value, i) => {
+                Array(displayCount).fill(0).map((_, i) => {
                   if (i < tokenModels.length) {
                     return (
-                      <Grid item xs={12} md={6} lg={4}>
-                        <TokenCard tokenModel={tokenModels[i]} onClick={this.handleTokenClick} />
+                      <Grid item xs={12} md={6} lg={4} key={i}>
+                        <TokenCard tokenModel={tokenModels[i]} isMixedMode={isMixedMode} isSelected={0 <= selectedTokenIds.indexOf(tokenModels[i].id)} onClick={this.handleTokenClick} />
                       </Grid>
                     )
 
                   } else {
                     return (
-                      <Grid item xs={12} md={6} lg={4}>
+                      <Grid item xs={12} md={6} lg={4} key={i}>
                         <TokenCard />
                       </Grid>
                     )
@@ -119,7 +171,7 @@ class MyPage extends React.Component {
               }
               {
                 (0 < remainCount) && (
-                  <Grid item xs={12} md={6} lg={4}>
+                  <Grid item xs={12} md={6} lg={4} key={displayCount}>
                     <Card onClick={this.handleMoreClick}>
                       <CardActionArea style={{width: '100%'}}>
                         <CardContent>

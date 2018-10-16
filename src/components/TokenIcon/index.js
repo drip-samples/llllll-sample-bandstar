@@ -46,8 +46,10 @@ class TokenIcon extends React.Component {
       case TokenType.band:
         src = imageBand
         break
+      default:
+        return null
     }
-    return <img src={src} {...remainProps} />
+    return <img src={src} alt={tokenModel.id} {...remainProps} />
   }
 }
 
