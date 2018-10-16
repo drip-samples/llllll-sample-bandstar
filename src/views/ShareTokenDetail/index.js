@@ -15,7 +15,7 @@ const NumericGauge = (labelName, value) => (
   </div>
 )
 
-class TokenDetail extends React.Component {
+class ShareTokenDetail extends React.Component {
   state = {
     tokenModel: null,
     isNotFound: false,
@@ -64,22 +64,35 @@ class TokenDetail extends React.Component {
     }
   }
 
-  networkName = (networkId) => {
-    switch (networkId) {
-      case 4:
-        return 'rinkeby'
-      case 42:
-        return 'kovan'
+  networkId = (name) => {
+    switch (name) {
+      case 'kovan':
+        return 42
+      case 'rinkeby':
+        return 4
+      default:
+        return null
+    }
+  }
+
+  web3HttpUrl = (name) => {
+    switch (name) {
+      case 'kovan':
+        return 'https://kovan.infura.io/ipN7Rvj4j0lzprCXMbql'
+      case 'rinkeby':
+        return 'https://rinkeby.infura.io/ipN7Rvj4j0lzprCXMbql'
       default:
         return null
     }
   }
 
   componentDidMount() {
-    const { networkId, currentAddress } = this.props
-    const { tokenId } = this.props.match.params
+    const { tokenId, networkName } = this.props.match.params
+    const networkId = this.networkId(networkName)
+    const Web3 = require('web3')
+    const web3 = new Web3(new Web3.providers.HttpProvider(this.web3HttpUrl(networkName)))
     const { SixPillars } = ContractData
-    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.addresses[networkId])
+    const sixPillars = new web3.eth.Contract(SixPillars.abi, SixPillars.addresses[networkId])
 
     if (Number.isNaN(parseInt(tokenId, 16))) {
       this.setState({isNotFound: true})
@@ -87,21 +100,20 @@ class TokenDetail extends React.Component {
     }
 
     let owner, creator
-    sixPillars.methods.ownerOf(tokenId).call({from: currentAddress})
+    sixPillars.methods.ownerOf(tokenId).call()
       .then((result) => {
         owner = result
-        return sixPillars.methods.creator(tokenId).call({from: currentAddress})
+        return sixPillars.methods.creator(tokenId).call()
       })
       .then((result) => {
         creator = result
-        return sixPillars.methods.inscription(tokenId).call({from: currentAddress})
+        return sixPillars.methods.inscription(tokenId).call()
       })
       .then((result) => {
-        const bn = new this.props.web3.utils.BN(result)
+        const bn = new web3.utils.BN(result)
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
         const model = TokenModel.decode(tokenId, owner, creator, inscription, ContractData.BandStar.addresses[networkId])
         if (model != null) {
-          model.alreadyDisplay()
           this.setState({tokenModel: model})
         } else {
           this.setState({isNotFound: true})
@@ -111,7 +123,6 @@ class TokenDetail extends React.Component {
 
   render() {
     const { tokenModel, isNotFound } = this.state
-    const shareUrl = `${window.location.origin}/llllll-sample-bandstar/${this.networkName(this.props.networkId)}/tokens/${this.props.match.params.tokenId}`
     return (
       <div>
         <h1>Token Detail</h1>
@@ -145,11 +156,6 @@ class TokenDetail extends React.Component {
               { NumericGauge('Passion', tokenModel.passion) }
               { NumericGauge('Looks', tokenModel.looks) }
               { NumericGauge('Mental', tokenModel.mental) }
-              <div style={{marginTop: '30px'}}>
-                Share URL
-                <br />
-                <a href={shareUrl} alt='share token url'>{shareUrl}</a>
-              </div>
             </React.Fragment>
 
           ) : (
@@ -161,4 +167,4 @@ class TokenDetail extends React.Component {
   }
 }
 
-export default ValidateWeb3Injector(TokenDetail)
+export default ShareTokenDetail
