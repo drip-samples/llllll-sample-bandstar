@@ -3,7 +3,8 @@ import TokenType from '../../enums/TokenType'
 import GenreType from '../../enums/GenreType'
 
 const IS_ALREADY_DISPLAY_KEY = 'IS_ALREADY_DISPLAY_KEY_'
-const IS_ALREADY_DISPLAY_VALUE = 'true'
+const IS_ALREADY_MIXED_KEY = 'IS_ALREADY_MIXED_KEY_'
+const TRUE_VALUE = 'true'
 
 class TokenModel {
   constructor() {
@@ -18,6 +19,7 @@ class TokenModel {
     this.looks = 0
     this.mental = 0
     this.isAlreadyDisplay = false
+    this.isAlreadyMixed = false
   }
 
   static decodeTokenTypeByBandStar(model, inscription) {
@@ -124,12 +126,14 @@ class TokenModel {
 
     if (model.tokenType === TokenType.band) {
       this.decodeForBand(model, inscription)
+      model.isAlreadyMixed = true
 
     } else {
       this.decodeForMember(model, inscription)
+      model.isAlreadyMixed = (window.localStorage.getItem(IS_ALREADY_MIXED_KEY + model.id.toLowerCase()) === TRUE_VALUE)
     }
 
-    model.isAlreadyDisplay = (window.localStorage.getItem(IS_ALREADY_DISPLAY_KEY + model.id.toLowerCase()) === IS_ALREADY_DISPLAY_VALUE)
+    model.isAlreadyDisplay = (window.localStorage.getItem(IS_ALREADY_DISPLAY_KEY + model.id.toLowerCase()) === TRUE_VALUE)
 
     return model
   }
@@ -173,7 +177,12 @@ class TokenModel {
 
   alreadyDisplay() {
     this.isAlreadyDisplay = true
-    window.localStorage.setItem(IS_ALREADY_DISPLAY_KEY + this.id.toLowerCase(), IS_ALREADY_DISPLAY_VALUE)
+    window.localStorage.setItem(IS_ALREADY_DISPLAY_KEY + this.id.toLowerCase(), TRUE_VALUE)
+  }
+
+  alreadyMixed() {
+    this.isAlreadyMixed = true
+    window.localStorage.setItem(IS_ALREADY_MIXED_KEY + this.id.toLowerCase(), TRUE_VALUE)
   }
 }
 
