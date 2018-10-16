@@ -7,7 +7,7 @@ import TokenIcon from '../../components/TokenIcon'
 import TokenTypeChip from '../../components/TokenTypeChip'
 import GenreTypeChip from '../../components/GenreTypeChip'
 import Loading from '../../components/Loading'
-import config from '../../config'
+import ContractData from '../../enums/ContractData'
 
 const NumericGauge = (labelName, value) => (
   <div>
@@ -65,10 +65,10 @@ class TokenDetail extends React.Component {
   }
 
   componentDidMount() {
-    const { currentAddress } = this.props
+    const { networkId, currentAddress } = this.props
     const { tokenId } = this.props.match.params
-    const { SixPillars } = config.ethereum
-    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.address)
+    const { SixPillars } = ContractData
+    const sixPillars = new this.props.web3.eth.Contract(SixPillars.abi, SixPillars.addresses[networkId])
 
     if (Number.isNaN(parseInt(tokenId, 16))) {
       this.setState({isNotFound: true})
@@ -88,7 +88,7 @@ class TokenDetail extends React.Component {
       .then((result) => {
         const bn = new this.props.web3.utils.BN(result)
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
-        const model = TokenModel.decode(tokenId, owner, creator, inscription)
+        const model = TokenModel.decode(tokenId, owner, creator, inscription, ContractData.BandStar.addresses[networkId])
         if (model != null) {
           model.alreadyDisplay()
           this.setState({tokenModel: model})

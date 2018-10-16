@@ -3,32 +3,34 @@ import Web3 from 'web3'
 import Web3Context from '../../contexts/Web3Context'
 import Web3StatusType from '../../enums/Web3StatusType'
 import Web3TransactionType from '../../enums/Web3TransactionType'
-import config from '../../config'
+import ContractData from '../../enums/ContractData'
 
 class Web3Provider extends React.Component {
   state = {
     web3: null,
     web3Status: Web3StatusType.identity,
+    networkId: null,
     currentAddress: null,
     web3Transaction: Web3TransactionType.none,
     mintToken: null,
   }
 
   mintData = (inscription) => {
-    const { web3 } = this.state
+    const { web3, networkId } = this.state
+    const sixPillarsAddress = ContractData.SixPillars.addresses[networkId]
     const methodHead = web3.utils.sha3("mint(uint256,address)").substr(0, 10)
     const _inscription = inscription.slice(-64)
-    const _sixPillarsAddress = ('0000000000000000000000000000000000000000000000000000000000000000' + config.ethereum.SixPillars.address.substr(2, 40)).slice(-64)
+    const _sixPillarsAddress = ('0000000000000000000000000000000000000000000000000000000000000000' + sixPillarsAddress.substr(2, 40)).slice(-64)
     const data = methodHead + _inscription + _sixPillarsAddress
     return data
   }
 
   mintToken = (inscription, sendingCallback = null) => {
     this.setState({web3Transaction: Web3TransactionType.none})
-    const {web3, currentAddress} = this.state
+    const {web3, networkId, currentAddress} = this.state
     web3.eth.sendTransaction({
       from: currentAddress,
-      to: config.ethereum.BandStar.address,
+      to: ContractData.BandStar.addresses[networkId],
       data: this.mintData(inscription),
     })
       .on('transactionHash', (transactionHash) => {
@@ -90,9 +92,10 @@ class Web3Provider extends React.Component {
             }
           })
           .then((res) => {
-            if (config.ethereum.networkId === res) {
+            if (0 <= Object.keys(ContractData.SixPillars.addresses).indexOf(res.toString())) {
               this.setState({
                 web3Status: Web3StatusType.success,
+                networkId: res,
                 mintToken,
               })
 
