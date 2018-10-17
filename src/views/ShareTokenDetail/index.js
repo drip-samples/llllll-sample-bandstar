@@ -112,7 +112,7 @@ class ShareTokenDetail extends React.Component {
       .then((result) => {
         const bn = new web3.utils.BN(result)
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
-        const model = TokenModel.decode(tokenId, owner, creator, inscription, ContractData.BandStar.addresses[networkId])
+        const model = TokenModel.decode(tokenId, owner, creator, inscription, networkId)
         if (model != null) {
           this.setState({tokenModel: model})
         } else {

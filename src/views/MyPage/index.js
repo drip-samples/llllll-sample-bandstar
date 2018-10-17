@@ -40,7 +40,7 @@ class MyPage extends React.Component {
       .then((result) => {
         const bn = new this.props.web3.utils.BN(result)
         id = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
-        if (TokenModel.isAlreadyMixed(id)) {
+        if (TokenModel.isAlreadyMixed(id, networkId)) {
           throw new Error(`token ${id} is already mixed.`)
         } else {
           return sixPillars.methods.creator(`0x${id}`).call({from: currentAddress})
@@ -53,7 +53,7 @@ class MyPage extends React.Component {
       .then((result) => {
         const bn = new this.props.web3.utils.BN(result)
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
-        const model = TokenModel.decode(id, currentAddress, creator, inscription, ContractData.BandStar.addresses[networkId])
+        const model = TokenModel.decode(id, currentAddress, creator, inscription, networkId)
         this.setState({tokenModels: this.state.tokenModels.concat(model)})
         return this.updateTokenId(nextIndex - 1, remainCount - 1)
       })
