@@ -3,10 +3,11 @@ import { withRouter } from 'react-router'
 
 class GithubPagesRedirectProvider extends React.Component {
   componentDidMount() {
-    const pathName = window.sessionStorage.redirect.split('/llllll-sample-bandstar')
+    const pathName = window.sessionStorage.redirect
+    const splitPathName = pathName ? pathName.split('/llllll-sample-bandstar') : []
     window.sessionStorage.redirect = null
-    if (1 < pathName.length) {
-      this.props.history.push(pathName[1])
+    if (1 < splitPathName.length) {
+      this.props.history.push(splitPathName[1])
     }
   }
 
