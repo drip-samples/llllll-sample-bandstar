@@ -12,7 +12,7 @@ class GithubPagesRedirectProvider extends React.Component {
   }
 
   render() {
-    return React.cloneElement(React.Children.only(this.props.children), {...this.props});
+    return React.cloneElement(React.Children.only(this.props.children), {...this.props})
   }
 }
 
