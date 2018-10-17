@@ -36,6 +36,9 @@ class TokenCard extends React.Component {
       } else if (tokenModel.isAlreadyMixed) {
         cardStyle.backgroundColor = grey['500']
       }
+
+    } else if (tokenModel && (tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed) {
+      cardStyle.backgroundColor = grey['500']
     }
     return (
       <Card onClick={this.handleClick}>
@@ -45,13 +48,6 @@ class TokenCard extends React.Component {
               <CardContent>
                 <div style={{float: 'left', height: '106px', marginBottom: '16px'}}>
                   <Loading />
-                </div>
-              </CardContent>
-
-            ) : ((tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed) ? (
-              <CardContent>
-                <div style={{float: 'left', height: '106px', marginBottom: '16px'}}>
-                  {tokenModel.id}<br />is already used.
                 </div>
               </CardContent>
 
