@@ -16,15 +16,20 @@ const LIST_ITEM_ONCE = 8
 class MyPage extends React.Component {
   state = {
     tokenBalance: null,
-    remainCount: 0,
-    displayCount: 0,
+    isLoadingNextToken: false,
+    isCanMore: false,
     tokenModels: [],
     isMixedMode: false,
     selectedTokenIds: [],
   }
 
   updateTokenId = (nextIndex, remainCount) => {
-    if ((nextIndex < 0) || (remainCount <= 0)) {
+    if (nextIndex < 0) {
+      this.setState({isLoadingNextToken: false})
+      return null
+
+    } else if (remainCount <= 0) {
+      this.setState({isLoadingNextToken: false, isCanMore: true})
       return null
     }
     const { networkId, currentAddress } = this.props
@@ -35,7 +40,11 @@ class MyPage extends React.Component {
       .then((result) => {
         const bn = new this.props.web3.utils.BN(result)
         id = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
-        return sixPillars.methods.creator(`0x${id}`).call({from: currentAddress})
+        if (TokenModel.isAlreadyMixed(id)) {
+          throw new Error(`token ${id} is already mixed.`)
+        } else {
+          return sixPillars.methods.creator(`0x${id}`).call({from: currentAddress})
+        }
       })
       .then((result) => {
         creator = result
@@ -46,7 +55,10 @@ class MyPage extends React.Component {
         const inscription = ("0000000000000000000000000000000000000000000000000000000000000000" + bn.toString(16)).slice(-64)
         const model = TokenModel.decode(id, currentAddress, creator, inscription, ContractData.BandStar.addresses[networkId])
         this.setState({tokenModels: this.state.tokenModels.concat(model)})
-        this.updateTokenId(nextIndex - 1, remainCount - 1)
+        return this.updateTokenId(nextIndex - 1, remainCount - 1)
+      })
+      .catch((error) => {
+        this.updateTokenId(nextIndex - 1, remainCount)
       })
   }
 
@@ -76,12 +88,12 @@ class MyPage extends React.Component {
   }
 
   handleMoreClick = () => {
-    const { remainCount, displayCount } = this.state
+    const { tokenBalance, tokenModels } = this.state
     this.setState({
-      remainCount: remainCount - LIST_ITEM_ONCE,
-      displayCount: (LIST_ITEM_ONCE <= remainCount) ? (displayCount + LIST_ITEM_ONCE) : (displayCount + remainCount),
+      isLoadingNextToken: true,
+      isCanMore: false,
     })
-    this.updateTokenId(remainCount - 1, LIST_ITEM_ONCE)
+    this.updateTokenId(tokenBalance - tokenModels.length - 1, LIST_ITEM_ONCE)
   }
 
   handleEditMixedClick = () => {
@@ -110,15 +122,15 @@ class MyPage extends React.Component {
         const balance = parseInt(result)
         this.setState({
           tokenBalance: balance,
-          remainCount: balance - LIST_ITEM_ONCE,
-          displayCount: (LIST_ITEM_ONCE <= balance) ? LIST_ITEM_ONCE : balance,
+          isLoadingNextToken: true,
         })
         this.updateTokenId(balance - 1, LIST_ITEM_ONCE)
       })
   }
 
   render() {
-    const { tokenBalance, remainCount, displayCount, tokenModels, isMixedMode, selectedTokenIds } = this.state
+    const { tokenBalance, isLoadingNextToken, isCanMore, tokenModels, isMixedMode, selectedTokenIds } = this.state
+    const displayCount = isLoadingNextToken ? tokenModels.length + 1 : tokenModels.length
     return (
       <div>
         <h1>My Page</h1>
@@ -168,7 +180,7 @@ class MyPage extends React.Component {
                 })
               }
               {
-                (0 < remainCount) && (
+                isCanMore && (
                   <Grid item xs={12} md={6} lg={4} key={displayCount}>
                     <Card onClick={this.handleMoreClick}>
                       <CardActionArea style={{width: '100%'}}>

@@ -25,6 +25,10 @@ class TokenModel {
     this.isAlreadyMixed = false
   }
 
+  static isAlreadyMixed(id) {
+    return window.localStorage.getItem(IS_ALREADY_MIXED_KEY + `0x${id.slice(-64)}`.toLowerCase()) === TRUE_VALUE
+  }
+
   static decodeTokenTypeByBandStar(model, inscription) {
     const i = 6
     const byte = inscription.substr(-((i + 1) * 2), 2)
