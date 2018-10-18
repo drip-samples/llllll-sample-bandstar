@@ -129,7 +129,7 @@ class TokenDetail extends React.Component {
             <React.Fragment>
               <div><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></div>
               {
-                (tokenModel !== null) && (tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed && (
+                (tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed && (
                   <div style={{color: '#ff0000'}}>token is already used.</div>
                 )
               }

@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import ValidateWeb3Injector from '../../injectors/ValidateWeb3Injector'
 import TokenType from '../../enums/TokenType'
 import TokenModel from '../../models/TokenModel'
 import TokenIcon from '../../components/TokenIcon'
@@ -140,7 +139,7 @@ class ShareTokenDetail extends React.Component {
             <React.Fragment>
               <div><TokenIcon tokenModel={tokenModel} style={{height: '200px'}} /></div>
               {
-                (tokenModel !== null) && (tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed && (
+                (tokenModel.tokenType !== TokenType.band) && tokenModel.isAlreadyMixed && (
                   <div style={{color: '#ff0000'}}>token is already used.</div>
                 )
               }
