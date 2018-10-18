@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/animal_music_band_drum.f0a2870c.png"
   },
   {
-    "revision": "5d2c823b2375ecd0bbdc",
+    "revision": "b799791ce6e20a77124f",
     "url": "/llllll-sample-bandstar/static/css/main.9f033e52.chunk.css"
   },
   {
@@ -28,8 +28,8 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/animal_music_band_bass.fa173274.png"
   },
   {
-    "revision": "5d2c823b2375ecd0bbdc",
-    "url": "/llllll-sample-bandstar/static/js/main.5d2c823b.chunk.js"
+    "revision": "b799791ce6e20a77124f",
+    "url": "/llllll-sample-bandstar/static/js/main.b799791c.chunk.js"
   },
   {
     "revision": "87f9cbb8992c7de437ab0519a3ccc80d",
@@ -56,7 +56,7 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/animal_music_band.611f0677.png"
   },
   {
-    "revision": "a39b33dfabd54700f70f8692062448de",
+    "revision": "20daf0395887f3d02d35ac97e2f754ee",
     "url": "/llllll-sample-bandstar/index.html"
   }
 ];
