@@ -18,7 +18,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build; rm -rf docs; mv build docs",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "truffle_compile": "cd truffle; truffle compile --all",
+    "truffle_migrate": "cd truffle; truffle migrate --reset",
+    "truffle_test": "cd truffle; truffle test"
   },
   "eslintConfig": {
     "extends": "react-app"
