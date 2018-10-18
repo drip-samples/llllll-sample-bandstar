@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "f0a2870c417734f95e0f21672039521f",
-    "url": "/llllll-sample-bandstar/static/media/animal_music_band_drum.f0a2870c.png"
+    "revision": "87f9cbb8992c7de437ab0519a3ccc80d",
+    "url": "/llllll-sample-bandstar/static/media/music_keyboard_woman.87f9cbb8.png"
   },
   {
-    "revision": "b799791ce6e20a77124f",
-    "url": "/llllll-sample-bandstar/static/css/main.9f033e52.chunk.css"
+    "revision": "d17a55bb15216b186369",
+    "url": "/llllll-sample-bandstar/static/css/main.f21ed424.chunk.css"
   },
   {
-    "revision": "547193465a2e190646de",
-    "url": "/llllll-sample-bandstar/static/js/1.54719346.chunk.js"
+    "revision": "2cbc5464c4eaa3e866eb",
+    "url": "/llllll-sample-bandstar/static/js/1.2cbc5464.chunk.js"
   },
   {
     "revision": "a55c30ae48bbd808408e",
@@ -28,12 +28,12 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/animal_music_band_bass.fa173274.png"
   },
   {
-    "revision": "b799791ce6e20a77124f",
-    "url": "/llllll-sample-bandstar/static/js/main.b799791c.chunk.js"
+    "revision": "f0a2870c417734f95e0f21672039521f",
+    "url": "/llllll-sample-bandstar/static/media/animal_music_band_drum.f0a2870c.png"
   },
   {
-    "revision": "87f9cbb8992c7de437ab0519a3ccc80d",
-    "url": "/llllll-sample-bandstar/static/media/music_keyboard_woman.87f9cbb8.png"
+    "revision": "d17a55bb15216b186369",
+    "url": "/llllll-sample-bandstar/static/js/main.d17a55bb.chunk.js"
   },
   {
     "revision": "355f3dfdd04440bf4e9b86fb94ab0768",
@@ -56,7 +56,11 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/animal_music_band.611f0677.png"
   },
   {
-    "revision": "20daf0395887f3d02d35ac97e2f754ee",
+    "revision": "f4b16392edec68abe47283d7027c39cb",
+    "url": "/llllll-sample-bandstar/static/media/poweredby6p.f4b16392.png"
+  },
+  {
+    "revision": "cfc60f8246e67d5d13c04fb5356a6f27",
     "url": "/llllll-sample-bandstar/index.html"
   }
 ];
