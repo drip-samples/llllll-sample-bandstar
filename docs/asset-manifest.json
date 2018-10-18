@@ -1,9 +1,9 @@
 {
-  "main.css": "/llllll-sample-bandstar/static/css/main.f21ed424.chunk.css",
-  "main.js": "/llllll-sample-bandstar/static/js/main.a19d3c80.chunk.js",
-  "main.js.map": "/llllll-sample-bandstar/static/js/main.a19d3c80.chunk.js.map",
-  "static/js/1.2cbc5464.chunk.js": "/llllll-sample-bandstar/static/js/1.2cbc5464.chunk.js",
-  "static/js/1.2cbc5464.chunk.js.map": "/llllll-sample-bandstar/static/js/1.2cbc5464.chunk.js.map",
+  "main.css": "/llllll-sample-bandstar/static/css/main.f76c69a2.chunk.css",
+  "main.js": "/llllll-sample-bandstar/static/js/main.dcb3fa82.chunk.js",
+  "main.js.map": "/llllll-sample-bandstar/static/js/main.dcb3fa82.chunk.js.map",
+  "static/js/1.f0a3a64c.chunk.js": "/llllll-sample-bandstar/static/js/1.f0a3a64c.chunk.js",
+  "static/js/1.f0a3a64c.chunk.js.map": "/llllll-sample-bandstar/static/js/1.f0a3a64c.chunk.js.map",
   "runtime~main.js": "/llllll-sample-bandstar/static/js/runtime~main.a55c30ae.js",
   "runtime~main.js.map": "/llllll-sample-bandstar/static/js/runtime~main.a55c30ae.js.map",
   "static/media/animal_music_band_singer.png": "/llllll-sample-bandstar/static/media/animal_music_band_singer.4a8bf5f6.png",
@@ -17,8 +17,8 @@
   "static/media/animal_music_band.png": "/llllll-sample-bandstar/static/media/animal_music_band.611f0677.png",
   "static/media/poweredby6p.png": "/llllll-sample-bandstar/static/media/poweredby6p.f4b16392.png",
   "static/media/animal_music_band_guitar.png": "/llllll-sample-bandstar/static/media/animal_music_band_guitar.c51737a1.png",
-  "static/css/main.f21ed424.chunk.css.map": "/llllll-sample-bandstar/static/css/main.f21ed424.chunk.css.map",
+  "static/css/main.f76c69a2.chunk.css.map": "/llllll-sample-bandstar/static/css/main.f76c69a2.chunk.css.map",
   "index.html": "/llllll-sample-bandstar/index.html",
-  "precache-manifest.2479e80eda186337fc4e23ebd938afb8.js": "/llllll-sample-bandstar/precache-manifest.2479e80eda186337fc4e23ebd938afb8.js",
+  "precache-manifest.8485dc3965cdf93dc694cbf9afef596a.js": "/llllll-sample-bandstar/precache-manifest.8485dc3965cdf93dc694cbf9afef596a.js",
   "service-worker.js": "/llllll-sample-bandstar/service-worker.js"
 }
