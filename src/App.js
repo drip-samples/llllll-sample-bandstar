@@ -5,6 +5,7 @@ import Web3Provider from './providers/Web3Provider'
 import GithubPagesRedirectProvider from './providers/GithubPagesRedirectProvider'
 import TokenDetail from './views/TokenDetail'
 import MyPage from './views/MyPage'
+import HowTo from './views/HowTo'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import NotFound from './components/NotFound'
@@ -20,6 +21,7 @@ class App extends Component {
               <div style={{paddingBottom: `${Footer.height()}px`}}>
                 <Switch>
                   <Route exact path="/:networkName/tokens/:tokenId" component={TokenDetail} />
+                  <Route exact path="/howto" component={HowTo} />
                   <Route exact path="/" component={MyPage} />
                   <Route component={NotFound} />
                 </Switch>
