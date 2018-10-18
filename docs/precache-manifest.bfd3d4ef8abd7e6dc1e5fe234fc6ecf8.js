@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/music_keyboard_woman.87f9cbb8.png"
   },
   {
-    "revision": "dcb3fa8244fa6a209818",
+    "revision": "101a3bd10847e8cf53e1",
     "url": "/llllll-sample-bandstar/static/css/main.f76c69a2.chunk.css"
   },
   {
@@ -32,8 +32,8 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/animal_music_band_drum.f0a2870c.png"
   },
   {
-    "revision": "dcb3fa8244fa6a209818",
-    "url": "/llllll-sample-bandstar/static/js/main.dcb3fa82.chunk.js"
+    "revision": "101a3bd10847e8cf53e1",
+    "url": "/llllll-sample-bandstar/static/js/main.101a3bd1.chunk.js"
   },
   {
     "revision": "355f3dfdd04440bf4e9b86fb94ab0768",
@@ -60,7 +60,7 @@ self.__precacheManifest = [
     "url": "/llllll-sample-bandstar/static/media/poweredby6p.f4b16392.png"
   },
   {
-    "revision": "18c0a16e312bda92a0635efc36e83099",
+    "revision": "bc6b8e7cf0dc2dd55094b4a5ffc96b6e",
     "url": "/llllll-sample-bandstar/index.html"
   }
 ];
