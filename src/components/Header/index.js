@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import Help from '@material-ui/icons/Help'
 import Web3Injector from '../../injectors/Web3Injector'
 import Web3TransactionType from '../../enums/Web3TransactionType'
 import NetworkName from '../../enums/NetworkName'
@@ -63,15 +65,20 @@ class Header extends React.Component {
     this.props.history.push('/')
   }
 
+  handleHelpClick = () => {
+    this.props.history.push('/howto')
+  }
+
   render() {
     const { networkId } = this.props
     const { isProgress, isOpen, snackMessage } = this.state
     return (
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h4" color="inherit" style={{flexGrow: 1}} onClick={this.handleLogoClick}>
+          <Typography variant="h4" color="inherit" style={{cursor: 'pointer'}} onClick={this.handleLogoClick}>
             BandStar
           </Typography>
+          <span style={{flexGrow: 1}}></span>
           {
             isProgress && <CircularProgress color="secondary" size={30} />
           }
@@ -82,6 +89,9 @@ class Header extends React.Component {
               </Typography>
             )
           }
+          <IconButton color="inherit" onClick={this.handleHelpClick} style={{marginLeft: '16px'}}>
+            <Help />
+          </IconButton>
         </Toolbar>
         <Snackbar
           anchorOrigin={{
