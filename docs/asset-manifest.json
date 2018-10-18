@@ -1,7 +1,7 @@
 {
   "main.css": "/llllll-sample-bandstar/static/css/main.f21ed424.chunk.css",
-  "main.js": "/llllll-sample-bandstar/static/js/main.d17a55bb.chunk.js",
-  "main.js.map": "/llllll-sample-bandstar/static/js/main.d17a55bb.chunk.js.map",
+  "main.js": "/llllll-sample-bandstar/static/js/main.a19d3c80.chunk.js",
+  "main.js.map": "/llllll-sample-bandstar/static/js/main.a19d3c80.chunk.js.map",
   "static/js/1.2cbc5464.chunk.js": "/llllll-sample-bandstar/static/js/1.2cbc5464.chunk.js",
   "static/js/1.2cbc5464.chunk.js.map": "/llllll-sample-bandstar/static/js/1.2cbc5464.chunk.js.map",
   "runtime~main.js": "/llllll-sample-bandstar/static/js/runtime~main.a55c30ae.js",
@@ -19,6 +19,6 @@
   "static/media/animal_music_band_guitar.png": "/llllll-sample-bandstar/static/media/animal_music_band_guitar.c51737a1.png",
   "static/css/main.f21ed424.chunk.css.map": "/llllll-sample-bandstar/static/css/main.f21ed424.chunk.css.map",
   "index.html": "/llllll-sample-bandstar/index.html",
-  "precache-manifest.1065e99a2ac3dcf9d0061b6963b22100.js": "/llllll-sample-bandstar/precache-manifest.1065e99a2ac3dcf9d0061b6963b22100.js",
+  "precache-manifest.2479e80eda186337fc4e23ebd938afb8.js": "/llllll-sample-bandstar/precache-manifest.2479e80eda186337fc4e23ebd938afb8.js",
   "service-worker.js": "/llllll-sample-bandstar/service-worker.js"
 }
