@@ -34,12 +34,12 @@ class Footer extends React.Component {
       <div style={this.rootStyle}>
         <div style={{padding: '10px', textAlign: 'center'}}>
           <div>
-            <a href='https://6-pillars.ooo/' alt='|||||| 6 pillars' target='_blank'>
+            <a href='https://6-pillars.ooo/' alt='|||||| 6 pillars' target='_blank' rel="noopener noreferrer">
               <img src={logo} alt='powered by |||||| 6 pillars' style={{height: '24px', marginBottom: '4px'}}/>
             </a>
           </div>
           <div>
-            <a href='https://github.com/drip-samples/llllll-sample-bandstar' alt='sample codes' target='_blank'>
+            <a href='https://github.com/drip-samples/llllll-sample-bandstar' alt='sample codes' target='_blank' rel="noopener noreferrer">
               <i className="fab fa-github fa-lg" style={{color: '#000000'}}></i>
             </a>
           </div>
