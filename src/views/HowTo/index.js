@@ -52,7 +52,7 @@ class HowTo extends React.Component {
           Share your band URL and be proud of about your band!
         </p>
         <p>
-          <h3>Step3</h3>
+          <h3>Step5</h3>
           The BandStar token is available for <a href='https://6-pillars.ooo/' alt='|||||| 6 pillars' target='_blank' rel="noopener noreferrer">
             |||||| - 6 pillars
           </a> compliant DApps.<br />
