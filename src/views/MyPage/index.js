@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import ValidateWeb3Injector from '../../injectors/ValidateWeb3Injector'
+import NetworkName from '../../enums/NetworkName'
 import TokenModel from '../../models/TokenModel'
 import TokenCard from '../../components/TokenCard'
 import Loading from '../../components/Loading'
@@ -79,7 +80,7 @@ class MyPage extends React.Component {
       }
 
     } else {
-      this.props.history.push(`/tokens/${tokenModel.id}`)
+      this.props.history.push(`/${NetworkName[tokenModel.networkId].toLowerCase()}/tokens/${tokenModel.id}`)
     }
   }
 

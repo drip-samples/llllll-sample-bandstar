@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import NetworkId from '../../enums/NetworkId'
 import TokenType from '../../enums/TokenType'
 import TokenModel from '../../models/TokenModel'
 import TokenIcon from '../../components/TokenIcon'
@@ -64,23 +65,14 @@ class ShareTokenDetail extends React.Component {
     }
   }
 
-  networkId = (name) => {
-    switch (name) {
-      case 'kovan':
-        return 42
-      case 'rinkeby':
-        return 4
-      default:
-        return null
-    }
-  }
-
   web3HttpUrl = (name) => {
     switch (name) {
       case 'kovan':
         return 'https://kovan.infura.io/ipN7Rvj4j0lzprCXMbql'
       case 'rinkeby':
         return 'https://rinkeby.infura.io/ipN7Rvj4j0lzprCXMbql'
+      case 'local':
+        return 'http://localhost:7545'
       default:
         return null
     }
@@ -92,7 +84,7 @@ class ShareTokenDetail extends React.Component {
 
   componentDidMount() {
     const { tokenId, networkName } = this.props.match.params
-    const networkId = this.networkId(networkName)
+    const networkId = NetworkId[networkName]
     const Web3 = require('web3')
     const web3 = new Web3(new Web3.providers.HttpProvider(this.web3HttpUrl(networkName)))
     const { SixPillars } = ContractData
