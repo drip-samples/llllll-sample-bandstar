@@ -15,8 +15,8 @@ export default {
     abi: BandStar['abi'],
     addresses: {
       3: '0x26addb72ab35fad08a895cfe717c5ff312a0f699',
-      4: '0x9895960b93e314ef221346ab985b895da9a5b7d5',
-      42: '0x9895960b93e314ef221346ab985b895da9a5b7d5',
+      4: '0xcdc2f9e5b782e421f6188736bd294ee5c716db2f',
+      42: '0x4f56b13e58577d67793eda79f48dd670c399a130',
       5777: BandStar['networks']['5777']['address'],
     },
   },
