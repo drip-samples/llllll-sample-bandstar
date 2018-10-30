@@ -33,7 +33,7 @@ class HowTo extends React.Component {
         <p>
           <h3>Step2</h3>
           Click <Button variant="outlined" color="primary">
-            Start Bund Edit
+            Start Band Edit
           </Button> and select 2 to 5 BandStar tokens required for band formation.<br />
           {"You can't select BandStar tokens that you used once, and BandStar tokens that became "}
           <TokenTypeChip tokenType={TokenType.band} />

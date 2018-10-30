@@ -139,7 +139,7 @@ class MyPage extends React.Component {
           </Grid>
           <Grid item xs={12} md={4} lg={3} key='editmixed'>
             <Button variant="outlined" color="primary" onClick={this.handleEditMixedClick}>
-              { isMixedMode ? 'Cancel Bund Edit' : 'Start Bund Edit' }
+              { isMixedMode ? 'Cancel Band Edit' : 'Start Band Edit' }
             </Button>
           </Grid>
           {
