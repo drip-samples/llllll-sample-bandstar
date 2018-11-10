@@ -71,6 +71,8 @@ class TokenDetail extends React.Component {
         return 'https://kovan.infura.io/ipN7Rvj4j0lzprCXMbql'
       case 'rinkeby':
         return 'https://rinkeby.infura.io/ipN7Rvj4j0lzprCXMbql'
+      case 'ropsten':
+        return 'https://ropsten.infura.io/ipN7Rvj4j0lzprCXMbql'
       case 'local':
         return 'http://localhost:7545'
       default:
